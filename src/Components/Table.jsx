@@ -1,35 +1,25 @@
 "use client";
-import { deleteById, getAll } from "@/lib/api/notes";
-import React, { useEffect, useState } from "react";
+import { deleteById } from "@/lib/api/notes";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-const NotesTable = () => {
-  const handleEdit = (note) => {
-    localStorage.setItem("editNote", JSON.stringify(note));
-    router.push("/note");
+const NotesTable = ({ noteDetails }) => {
+  const handleEdit = (noteId) => {
+    router.push(`/note?id=${noteId}`);
   };
 
   const router = useRouter();
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(noteDetails || []);
 
   const handleDelete = async (noteId) => {
     try {
       const response = await deleteById(noteId);
-      await fetchNotes();
+      console.log(response);
+      setNotes(notes.filter((note) => note._id !== noteId));
     } catch (err) {
       console.log(err);
     }
   };
-  const fetchNotes = async () => {
-    try {
-      const notes = await getAll();
-      setNotes(notes);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  useEffect(() => {
-    fetchNotes();
-  }, []);
+
   return (
     <div className="max-w-6xl mx-auto mt-10 px-6">
       <h2 className="text-2xl font-bold mb-4 text-purple-700 text-center">
@@ -67,7 +57,7 @@ const NotesTable = () => {
                   <td className="px-6 py-4">{note.description}</td>
                   <td className="px-6 py-4 text-center space-x-3">
                     <button
-                      onClick={() => handleEdit(note)}
+                      onClick={() => handleEdit(note._id)}
                       className="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded cursor-pointer"
                     >
                       Edit

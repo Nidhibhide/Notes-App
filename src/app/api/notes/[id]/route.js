@@ -1,5 +1,4 @@
-//delete by id
-//edit by id
+
 
 import MongoConnection from "@/lib/connection";
 import Note from "@/models/notes";
@@ -32,7 +31,33 @@ export const DELETE = async (request, context) => {
     );
   }
 };
-
+export const GET = async (request, context) => {
+  try {
+    const { id } = await context.params;
+    await MongoConnection();
+    const note = await Note.findById(id);
+    if (!note) {
+      return NextResponse.json(
+        {
+          error: "Note not found",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+    return NextResponse.json(note);
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: "Failed to fetch note",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+};
 export const PUT = async (request, context) => {
   try {
     const { id } = await context.params;

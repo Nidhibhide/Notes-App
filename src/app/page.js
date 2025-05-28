@@ -1,9 +1,11 @@
 import NotesTable from "@/Components/Table";
-
-export default function Home() {
+import { getAll } from "@/lib/api/notes";
+export default async function Home() {
+  const notes = await getAll(); //SSR Fetch
   return (
     <>
-      <NotesTable />
+      <NotesTable noteDetails={notes} />
     </>
   );
 }
+

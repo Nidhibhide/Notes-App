@@ -4,25 +4,33 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { create, edit } from "@/lib/api/notes";
+import { create, edit, getById } from "@/lib/api/notes";
+import { useSearchParams } from "next/navigation";
 
 const AddNoteForm = () => {
   const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
   const [note, setNote] = useState();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   const validationSchema = Yup.object({
     title: Yup.string().required("Title is required"),
     description: Yup.string().required("Description is required"),
   });
-  useEffect(() => {
-    const storedNote = localStorage.getItem("editNote");
 
-    if (storedNote) {
-      const note = JSON.parse(storedNote);
-      setNote(note);
-      setIsEdit(true);
-      localStorage.removeItem("editNote");
+  const fetchNote = async () => {
+    try {
+      if (id) {
+        const note = await getById(id);
+        setNote(note);
+        setIsEdit(true);
+      }
+    } catch (err) {
+      console.log(err);
     }
+  };
+  useEffect(() => {
+    fetchNote();
   }, []);
   const initialValues = {
     title: note?.title || "",
