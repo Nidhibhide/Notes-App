@@ -6,7 +6,7 @@ export const create = async (data) => {
   return response.data;
 };
 
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export const getAll = async () => {
   const response = await fetch(`${BASE_URL}/api/notes`, {
     method: "GET",
