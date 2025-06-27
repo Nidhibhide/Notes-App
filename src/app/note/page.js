@@ -1,4 +1,4 @@
-import NoteForm from "@/components/AddNote";
+import NoteForm from "@/Components/AddNote";
 import { Suspense } from "react";
 export default function AddNoteForm() {
   return (

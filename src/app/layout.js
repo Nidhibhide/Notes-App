@@ -1,5 +1,5 @@
 import "./globals.css";
-import Header from "@/components/Header";
+import Header from "@/Components/Header";
 import { Inter } from "next/font/google";
 export const metadata = {
   title: "Note App",
