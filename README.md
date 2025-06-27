@@ -3,6 +3,8 @@
 
 A powerful and elegant **Notes App** built using **Next.js**, **Express.js**, **TypeScript**, and **Tailwind CSS**. Users can seamlessly **Create**, **Read**, **Update**, and **Delete** notes, with a smooth blend of **Client-Side Rendering (CSR)** and **Server-Side Rendering (SSR)** for optimal performance.
 
+🌐 **Live Demo**:
+[https://notes-app-eosin-six.vercel.app/](https://notes-app-eosin-six.vercel.app/)
 
 
 ## 🚀 Features
